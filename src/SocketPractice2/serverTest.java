@@ -8,24 +8,20 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
 
-import Model.User;
+import Control.UserControl;
 
 public class serverTest {
 	static ServerSocket server;
 	static List<ConnectionToClient> clients;
-	static ConcurrentHashMap<String, User> userMap;
-	static int userId = 1111;
-	static final float zombiePossiblity = 0.3f;
-	static final int maxPlyaer = 7;
-	static final int maxZombie = 3;
-	static int zombieNum = 0;
+	static UserControl userControl;
+	
+	
 
 	serverTest() throws IOException {
 		server = new ServerSocket(5000);
 		clients = new ArrayList<>();
-		userMap = new ConcurrentHashMap<String, User>();
+		userControl = new UserControl();
 	}
 
 	public static void main(String[] args) {
@@ -41,8 +37,9 @@ public class serverTest {
 				
 				// Init New User
 				String name = (String) client.read();
-				String initialLocation = (String) client.read();
-				initAndAddUser(name, initialLocation);
+				double latitude = (double)client.read();
+				double longitude = (double)client.read();
+				userControl.initAndAddUser(name, latitude, longitude);
 
 				// Thread start
 				new MessageHandler(client).start();
@@ -77,12 +74,16 @@ public class serverTest {
 					System.out.println("Read : " + input);
 					String[] nameAndLocation = input.split(":");
 					String name = nameAndLocation[0];
-					String Location = nameAndLocation[1];
-					userMap.get(name).setLocation(Location);
+					String[] Location = nameAndLocation[1].split(" ");
+					double latitude = Double.parseDouble(Location[0]);
+					double longitude = Double.parseDouble(Location[1]);
+					userControl.setLatitude(name, latitude);
+					userControl.setLongitude(name, longitude);
+					
+					// Game play
+					userControl.attack();
 
-					// ToDo Game play
-
-					tellEveryOne(userMap);
+					tellEveryOne(userControl.getUserMap());
 				}
 			}catch(ArrayIndexOutOfBoundsException idxE){
 			}catch (Exception e) {
@@ -91,14 +92,7 @@ public class serverTest {
 		}
 	}
 
-	public static void initAndAddUser(String name, String initialLocation) {
-		// ToDo change to getting from client initial Location
-		boolean isZombie = Math.random() > zombiePossiblity ? (zombieNum < maxZombie ? true : false) : false;
-		if (isZombie)
-			zombieNum++;
-		User user = new User(name, initialLocation, isZombie);
-		userMap.put(name, user);
-	}
+	
 
 	public static void tellEveryOne(Object message) throws IOException {
 		for (ConnectionToClient client : clients) {

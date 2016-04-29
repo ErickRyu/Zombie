@@ -15,6 +15,7 @@ public class clientTest {
 	static final String ip = "127.0.0.1";
 	static final int port = 5000;
 	static String name;
+
 	clientTest() {
 		try {
 			socket = new Socket(ip, port);
@@ -33,16 +34,20 @@ public class clientTest {
 			BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in));
 
 			String input = "";
-			
+
 			// Login
 			System.out.print("Input name : ");
 			name = keyboard.readLine();
 			server.write(name);
-			String initialLocation = "";
-			System.out.println("Input initial location : ");
-			initialLocation = keyboard.readLine();
-			server.write(initialLocation);
+			double latitude, longitude;
+			System.out.println("Input initial latitude : ");
+			latitude = Double.parseDouble(keyboard.readLine());
+			server.write(latitude);
 			
+			System.out.println("Input initial longitude : ");
+			longitude = Double.parseDouble(keyboard.readLine());
+			server.write(longitude);
+
 			System.out.println("[Info] Connection complete");
 			while ((input = keyboard.readLine()) != null) {
 				server.write(name + ":" + input);
@@ -62,21 +67,29 @@ public class clientTest {
 		MessageHandler(ConnectionToServer server) {
 			this.server = server;
 		}
-		ConcurrentHashMap<String, User> cHashMap;
+
 
 		public void run() {
-			ConcurrentHashMap<String, String> strtable = new ConcurrentHashMap<>();
 			ConcurrentHashMap<String, User> userMap = new ConcurrentHashMap<>();
 			try {
-				while((userMap = (ConcurrentHashMap<String, User>)server.read())!=null){
-					for(Entry<String, User> user : userMap.entrySet()){
+				System.out.println("==============================");
+				while ((userMap = (ConcurrentHashMap<String, User>) server.read()) != null) {
+					for (Entry<String, User> user : userMap.entrySet()) {
 						String name = user.getKey();
-						String location = user.getValue().getLocation();
-						System.out.println(name + ":" + location);
+						User me = user.getValue();
+						double latitude = me.getLatitude();
+						double longitude = me.getLongitude();
+						int hp = me.getHP();
+						boolean isZombie =me.getisZombie(); 
+						
+						System.out.println(name + "-------------");
+						System.out.println("(" + latitude + ", " + longitude + ")");
+						System.out.println(isZombie? "Zombie" : "Person");
+						System.out.println("hp : " + hp);
 					}
 					userMap.clear();
 				}
-				
+
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

@@ -7,10 +7,5 @@ import Model.User;
 public class GameControl {
 	ConcurrentHashMap<String, User> userMap;
 	
-	/*
-	 * void attack()
-	 * 
-	 * 
-	 * 
-	 */
+	
 }
