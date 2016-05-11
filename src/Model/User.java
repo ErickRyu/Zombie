@@ -10,6 +10,7 @@ public class User implements Serializable{
 	private String userName;
 	private int hp;
 	private boolean isZombie;
+	private boolean isDead;
 	private double latitude;
 	private double longitude;
 	// ToDo
@@ -20,6 +21,7 @@ public class User implements Serializable{
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.isZombie = isZombie;
+		this.isDead = false;
 	}	
 	public String getUserName(){return userName;}
 	public int getHP(){return hp;}
@@ -29,4 +31,6 @@ public class User implements Serializable{
 	public double getLongitude(){return longitude;}
 	public void setLatitude(double latitude){this.latitude = latitude;}
 	public void setLongitude(double longitude){this.longitude = longitude;}
+	public boolean isDead(){return isDead;}
+	public void setDead(){isDead = true;}
 }

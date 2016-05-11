@@ -1,4 +1,4 @@
-package SocketPractice2;
+package Socket;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -10,13 +10,15 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import Model.User;
 
-public class clientTest {
+public class Client {
 	static Socket socket;
 	static final String ip = "127.0.0.1";
 	static final int port = 5000;
 	static String name;
+	static boolean isFirstUser = false;
+	static boolean isGameOver = true;
 
-	clientTest() {
+	Client() {
 		try {
 			socket = new Socket(ip, port);
 		} catch (Exception e) {
@@ -25,40 +27,49 @@ public class clientTest {
 
 	public static void main(String[] args) {
 		try {
-
-			new clientTest();
+			Client client = new Client();
 			ConnectionToServer server = new ConnectionToServer(socket);
 
-			new MessageHandler(server).start();
-
-			BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in));
-
-			String input = "";
-
-			// Login
-			System.out.print("Input name : ");
-			name = keyboard.readLine();
-			server.write(name);
-			double latitude, longitude;
-			System.out.println("Input initial latitude : ");
-			latitude = Double.parseDouble(keyboard.readLine());
-			server.write(latitude);
-			
-			System.out.println("Input initial longitude : ");
-			longitude = Double.parseDouble(keyboard.readLine());
-			server.write(longitude);
-
+			client.initUser(server);
 			System.out.println("[Info] Connection complete");
-			while ((input = keyboard.readLine()) != null) {
-				server.write(name + ":" + input);
-			}
-			socket.close();
+			String commandToGo = "";
 
-			keyboard.close();
+			new MessageHandler(server).start();
+			// socket.close();
 		} catch (Exception e) {
-			e.printStackTrace();
 
+			e.printStackTrace();
 		}
+
+	}
+
+	private void initUser(ConnectionToServer server) throws Exception {
+		BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in));
+
+		String input = "";
+
+		// Login
+		System.out.print("Input name : ");
+		name = keyboard.readLine();
+		server.write(name);
+		double latitude, longitude;
+		System.out.println("Input initial latitude : ");
+		latitude = Double.parseDouble(keyboard.readLine());
+		server.write(latitude);
+
+		System.out.println("Input initial longitude : ");
+		longitude = Double.parseDouble(keyboard.readLine());
+		server.write(longitude);
+		keyboard.close();
+
+	}
+
+	public static double getLatitude() {
+		return 0.3;
+	}
+
+	public static double getLongitude() {
+		return 0.3;
 	}
 
 	private static class MessageHandler extends Thread {
@@ -68,23 +79,34 @@ public class clientTest {
 			this.server = server;
 		}
 
-
 		public void run() {
 			ConcurrentHashMap<String, User> userMap = new ConcurrentHashMap<>();
 			try {
 				System.out.println("==============================");
-				while ((userMap = (ConcurrentHashMap<String, User>) server.read()) != null) {
+				String input = "";
+				while (true) {
+					System.out.println("[Info] Watting command from server");
+					while (!(input = (String)server.read()).equals("giveLocation")){;} 
+					System.out.println("[Info] Got comman from server");
+					double latitude = getLatitude();
+					double longitude = getLongitude();
+					server.write(name + ":" + latitude + " " + longitude);
+
+					System.out.println("\n");
+					System.out.println("*********************************");
+					System.out.println(name);
+					userMap = (ConcurrentHashMap<String, User>) server.read();
 					for (Entry<String, User> user : userMap.entrySet()) {
 						String name = user.getKey();
 						User me = user.getValue();
-						double latitude = me.getLatitude();
-						double longitude = me.getLongitude();
+						latitude = me.getLatitude();
+						longitude = me.getLongitude();
 						int hp = me.getHP();
-						boolean isZombie =me.getisZombie(); 
-						
+						boolean isZombie = me.getisZombie();
+
 						System.out.println(name + "-------------");
 						System.out.println("(" + latitude + ", " + longitude + ")");
-						System.out.println(isZombie? "Zombie" : "Person");
+						System.out.println(isZombie ? "Zombie" : "Person");
 						System.out.println("hp : " + hp);
 					}
 					userMap.clear();
