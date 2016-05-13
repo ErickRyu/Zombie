@@ -15,6 +15,7 @@ public class Client {
 	static final String ip = "127.0.0.1";
 	static final int port = 5000;
 	static String name;
+	static int userId;
 	static boolean isFirstUser = false;
 	static boolean isGameOver = true;
 
@@ -49,9 +50,14 @@ public class Client {
 		String input = "";
 
 		// Login
-		System.out.print("Input name : ");
-		name = keyboard.readLine();
-		server.write(name);
+		boolean matched = false;
+		while(!matched){
+			System.out.print("Input id : ");
+			userId = Integer.parseInt(keyboard.readLine());
+			server.write(userId);
+			matched = (boolean)server.read();
+		}
+
 		double latitude, longitude;
 		System.out.println("Input initial latitude : ");
 		latitude = Double.parseDouble(keyboard.readLine());
@@ -80,31 +86,31 @@ public class Client {
 		}
 
 		public void run() {
-			ConcurrentHashMap<String, User> userMap = new ConcurrentHashMap<>();
+			ConcurrentHashMap<Integer, User> userMap = new ConcurrentHashMap<>();
 			try {
 				System.out.println("==============================");
 				String input = "";
 				while (true) {
 					System.out.println("[Info] Watting command from server");
-					while (!(input = (String)server.read()).equals("giveLocation")){;} 
+					while (!(input = (String) server.read()).equals("giveLocation")) {
+						;
+					}
 					System.out.println("[Info] Got comman from server");
 					double latitude = getLatitude();
 					double longitude = getLongitude();
-					server.write(name + ":" + latitude + " " + longitude);
+					server.write(userId + ":" + latitude + " " + longitude);
 
 					System.out.println("\n");
 					System.out.println("*********************************");
-					System.out.println(name);
-					userMap = (ConcurrentHashMap<String, User>) server.read();
-					for (Entry<String, User> user : userMap.entrySet()) {
-						String name = user.getKey();
-						User me = user.getValue();
-						latitude = me.getLatitude();
-						longitude = me.getLongitude();
-						int hp = me.getHP();
-						boolean isZombie = me.getisZombie();
+					userMap = (ConcurrentHashMap<Integer, User>) server.read();
+					for (User user : userMap.values()) {
+						String name = user.getUserName();
+						latitude = user.getLatitude();
+						longitude = user.getLongitude();
+						int hp = user.getHP();
+						boolean isZombie = user.getisZombie();
 
-						System.out.println(name + "-------------");
+						System.out.println("-------------------\n" + name);
 						System.out.println("(" + latitude + ", " + longitude + ")");
 						System.out.println(isZombie ? "Zombie" : "Person");
 						System.out.println("hp : " + hp);

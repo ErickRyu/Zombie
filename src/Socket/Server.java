@@ -14,7 +14,7 @@ import java.util.Scanner;
 import Control.UserControl;
 
 public class Server {
-	static final int WAIT_TIME = 2500;			// 2.5sec
+	static final int WAIT_TIME = 2800;			// 2.8sec
 	static ServerSocket serverSocekt;
 	static List<ConnectionToClient> clients;
 	static UserControl userControl;
@@ -86,10 +86,17 @@ public class Server {
 
 	private void initUser(ConnectionToClient client) {
 		try {
-			String name = (String) client.read();
+			boolean matched = false;
+			int userId = 0;
+			while(!matched){
+				userId = (int) client.read();
+				matched = userControl.isThereMatchedUser(userId);
+				client.write(matched);
+			}
 			double latitude = (double) client.read();
 			double longitude = (double) client.read();
-			userControl.initAndAddUser(name, latitude, longitude);
+			
+			userControl.putUser(userControl.initUser(userId, latitude, longitude));
 		} catch (IOException e) {
 			System.out.println("IOExcpetion \n" + e.getMessage());
 		} catch (Exception e) {
@@ -115,13 +122,13 @@ public class Server {
 						client.write("giveLocation");
 						input = (String) client.read();
 						System.out.println("Read : " + input);
-						String[] nameAndLocation = input.split(":");
-						String name = nameAndLocation[0];
-						String[] Location = nameAndLocation[1].split(" ");
+						String[] idAndLocation = input.split(":");
+						int userId = Integer.parseInt(idAndLocation[0]);
+						String[] Location = idAndLocation[1].split(" ");
 						double latitude = Double.parseDouble(Location[0]);
 						double longitude = Double.parseDouble(Location[1]);
-						userControl.setLatitude(name, latitude);
-						userControl.setLongitude(name, longitude);
+						userControl.setLatitude(userId, latitude);
+						userControl.setLongitude(userId, longitude);
 					}
 					// Game play
 					userControl.attack();

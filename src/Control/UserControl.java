@@ -3,79 +3,58 @@ package Control;
 import java.util.concurrent.ConcurrentHashMap;
 
 import Model.User;
+import Model.UserDatabase;
 
 public class UserControl {
-	static final double _AttackableDistance = 0.00015;
+	
 	static final float zombiePossiblity = 0.3f;
 	static final int _MaxPlyaer = 7;
 	static final int _MaxZombie = 3;
-	static final int _AttackPower = 1;
+	
 	static int zombieNum = 0;
-	ConcurrentHashMap<String, User> userMap;
-
+	
+	ConcurrentHashMap<Integer, User> userMap;
+	UserDatabase userDB;
+	GameControl gameControl;
 	public UserControl() {
-		userMap = new ConcurrentHashMap<String, User>();
+		userMap = new ConcurrentHashMap<Integer, User>();
+		userDB = new UserDatabase();
+		gameControl = new GameControl();
 	}
 
 	public void printUser() {
 
 	}
-
-	public void initAndAddUser(String name, double latitude, double longitude) {
+	public User initUser(int userId, double latitude, double longitude) {
 		// ToDo change to getting from client initial Location
 		boolean isZombie = Math.random() > zombiePossiblity ? (zombieNum < _MaxZombie ? true : false) : false;
 		if (isZombie)
 			zombieNum++;
-		User user = new User(name, latitude, longitude, isZombie);
-		userMap.put(name, user);
+		String name = userDB.getUserName(userId);
+		User user = new User(userId, name, latitude, longitude, isZombie);
+		return user;
+	}
+	public void putUser(User user){
+		userMap.put(user.getUserId(), user);
 	}
 
-	public void addUser(String name, User user) {
-		userMap.put(name, user);
+	public void setLatitude(int userId, double latitude){
+		userMap.get(userId).setLatitude(latitude);
 	}
-	public void setLatitude(String name, double latitude){
-		userMap.get(name).setLatitude(latitude);
-	}
-	public void setLongitude(String name, double longitude){
-		userMap.get(name).setLongitude(longitude);
+	public void setLongitude(int userId, double longitude){
+		userMap.get(userId).setLongitude(longitude);
 	}
 
-	public ConcurrentHashMap<String, User> getUserMap() {
+	public ConcurrentHashMap<Integer, User> getUserMap() {
 		return userMap;
 	}
 
-	public void updateUserMap() {
-
+	public boolean isThereMatchedUser(int userId){
+		String name = userDB.getUserName(userId);
+		return name!=null? true:false;
 	}
-
-
-	/**
-	 * Attack with Double
-	 */
-	public void attack() {
-
-		for (User user1 : userMap.values()) {
-			for (User user2 : userMap.values()) {
-				boolean isSameUser = user1 == user2;
-				boolean isThereDeadUser = user1.isDead() || user2.isDead(); 
-				if(isSameUser || isThereDeadUser)
-					continue;
-				
-				double user1Lat, user1Long, user2Lat, user2Long;
-				user1Lat = user1.getLatitude();
-				user1Long = user1.getLongitude();
-				user2Lat = user2.getLatitude();
-				user2Long = user2.getLongitude();
-				
-				double distance = Math.sqrt(Math.pow(user1Lat-user2Lat, 2) + Math.pow(user1Long-user2Long, 2));
-				boolean isAttackable = distance < _AttackableDistance;
-				System.out.println(distance + " : " + isAttackable);
-				
-				if (isAttackable && user1.getisZombie() && !user2.getisZombie()) {
-					user2.setHP(user2.getHP() - _AttackPower);
-					if(user2.getHP() <= 0) user2.setDead();
-				}
-			}
-		}
+	
+	public void attack(){
+		gameControl.attack(userMap);
 	}
 }
