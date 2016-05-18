@@ -22,9 +22,6 @@ public class UserControl {
 		gameControl = new GameControl();
 	}
 
-	public void printUser() {
-
-	}
 	public User initUser(int userId, double latitude, double longitude) {
 		// ToDo change to getting from client initial Location
 		boolean isZombie = Math.random() > zombiePossiblity ? (zombieNum < _MaxZombie ? true : false) : false;
@@ -39,6 +36,9 @@ public class UserControl {
 	}
 
 	public void setLatitude(int userId, double latitude){
+		if(userMap.get(userId) == null){
+			System.out.println("userMap is null");
+		}
 		userMap.get(userId).setLatitude(latitude);
 	}
 	public void setLongitude(int userId, double longitude){

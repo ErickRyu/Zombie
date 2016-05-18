@@ -2,7 +2,6 @@ package Model;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 
 public class UserDatabase {
 	Map<Integer, String> userDatabase;

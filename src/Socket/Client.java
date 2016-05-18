@@ -5,7 +5,6 @@ import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 
 import Model.User;
@@ -33,8 +32,10 @@ public class Client {
 
 			client.initUser(server);
 			System.out.println("[Info] Connection complete");
-			String commandToGo = "";
-
+			String input = "";
+			while(!(input = (String)server.read()).equals("GO")){
+				;
+			}
 			new MessageHandler(server).start();
 			// socket.close();
 		} catch (Exception e) {
@@ -47,7 +48,6 @@ public class Client {
 	private void initUser(ConnectionToServer server) throws Exception {
 		BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in));
 
-		String input = "";
 
 		// Login
 		boolean matched = false;
@@ -58,14 +58,14 @@ public class Client {
 			matched = (boolean)server.read();
 		}
 
-		double latitude, longitude;
-		System.out.println("Input initial latitude : ");
-		latitude = Double.parseDouble(keyboard.readLine());
-		server.write(latitude);
-
-		System.out.println("Input initial longitude : ");
-		longitude = Double.parseDouble(keyboard.readLine());
-		server.write(longitude);
+//		double latitude, longitude;
+//		System.out.println("Input initial latitude : ");
+//		latitude = Double.parseDouble(keyboard.readLine());
+//		server.write(latitude);
+//
+//		System.out.println("Input initial longitude : ");
+//		longitude = Double.parseDouble(keyboard.readLine());
+//		server.write(longitude);
 		keyboard.close();
 
 	}

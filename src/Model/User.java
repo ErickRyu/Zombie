@@ -14,6 +14,8 @@ public class User implements Serializable{
 	private boolean isDead;
 	private double latitude;
 	private double longitude;
+	private int kill;
+	
 	private List<User> nearEnemies;
 	// ToDo
 	public User(){}
@@ -25,6 +27,7 @@ public class User implements Serializable{
 		this.longitude = longitude;
 		this.isZombie = isZombie;
 		this.isDead = false;
+		kill = 0;
 		nearEnemies = new ArrayList<>();
 	}	
 	public int getUserId(){return userId;}
@@ -46,4 +49,7 @@ public class User implements Serializable{
 	
 	public List<User> getNearEnemies(){return nearEnemies;}
 	public void setNearEnemies(List<User> nearEnemies){this.nearEnemies = nearEnemies;}
+	
+	public int getKill() {return kill;}
+	public void addKill() {kill++;}
 }

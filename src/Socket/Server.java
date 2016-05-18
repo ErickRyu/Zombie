@@ -14,7 +14,7 @@ import java.util.Scanner;
 import Control.UserControl;
 
 public class Server {
-	static final int WAIT_TIME = 2800;			// 2.8sec
+	static final int WAIT_TIME = 2800; // 2.8sec
 	static ServerSocket serverSocekt;
 	static List<ConnectionToClient> clients;
 	static UserControl userControl;
@@ -63,6 +63,7 @@ public class Server {
 		while (!isGameOver) {
 			;
 		}
+		
 		serverSocekt.close();
 	}
 
@@ -73,9 +74,16 @@ public class Server {
 			while (!commandToGo.equals("GO")) {
 				commandToGo = sc.next();
 			}
+			try {
+				for (ConnectionToClient client : clients) {
+					client.write("GO");
+				}
+			} catch (IOException e) {
+				System.out.println("IOException\n" + e.getMessage());
+			}
 			isGameStart = true;
 			isGameOver = false;
-			
+
 			// Thread start
 			Runnable r = new MessageHandler();
 			Thread thread = new Thread(r);
@@ -88,14 +96,17 @@ public class Server {
 		try {
 			boolean matched = false;
 			int userId = 0;
-			while(!matched){
+			while (!matched) {
 				userId = (int) client.read();
+				System.out.println(userId);
 				matched = userControl.isThereMatchedUser(userId);
 				client.write(matched);
 			}
-			double latitude = (double) client.read();
-			double longitude = (double) client.read();
-			
+//			double latitude = (double) client.read();
+//			double longitude = (double) client.read();
+			double latitude = 0;
+			double longitude = 0;
+			System.out.println("login user id : ("+userId+")");
 			userControl.putUser(userControl.initUser(userId, latitude, longitude));
 		} catch (IOException e) {
 			System.out.println("IOExcpetion \n" + e.getMessage());
@@ -127,6 +138,7 @@ public class Server {
 						String[] Location = idAndLocation[1].split(" ");
 						double latitude = Double.parseDouble(Location[0]);
 						double longitude = Double.parseDouble(Location[1]);
+						
 						userControl.setLatitude(userId, latitude);
 						userControl.setLongitude(userId, longitude);
 					}
