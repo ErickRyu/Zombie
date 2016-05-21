@@ -1,0 +1,199 @@
+<?xml version="1.0"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:background="#000000">
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:weightSum="1">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="결과 화면"
+            android:id="@+id/result"
+            android:layout_weight="1.48"
+            android:textColor="#ffffff"
+            android:textSize="40dp"
+            android:gravity="center" />
+
+        <EditText
+            android:id="@+id/isZombie"
+            android:layout_width="fill_parent"
+            android:layout_height="100dp"
+            android:textSize="30dp"
+            android:textColor="#ff0000"
+            android:gravity="center"
+            android:text="플레이어구분 : 좀비">
+        </EditText>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_weight="1"
+        android:background="#000000">
+
+        <Button
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:text="name"
+            android:background="@drawable/btn_stroke"
+            android:textColor="#ff0000"
+            android:layout_weight="1"
+            android:layout_margin="10dp" />
+
+        <Button
+            android:id="@+id/kill"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Kill"
+            android:layout_weight="1"
+            android:padding="15dp"
+            android:background="@drawable/btn_stroke"
+            android:textColor="#ff0000"
+
+            android:layout_margin="10dp" />
+
+        <Button
+            android:id="@+id/death"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Death"
+            android:background="@drawable/btn_stroke"
+            android:textColor="#ff0000"
+            android:layout_weight="1"
+            android:layout_margin="10dp" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_weight="1">
+
+        <Button
+            android:id="@+id/myName"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="I"
+            android:textColor="#ff0000"
+            android:layout_weight="1"
+            android:layout_margin="10dp"
+            android:background="#000000" />
+
+        <Button
+            android:id="@+id/kill_1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="5"
+            android:textColor="#ff0000"
+            android:background="#000000"
+            android:layout_weight="1"
+            android:layout_margin="10dp" />
+        <Button
+            android:id="@+id/death_3"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:text="0"
+            android:background="#000000"
+            android:textColor="#ff0000"
+            android:layout_weight="1"
+            android:layout_margin="10dp" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_weight="1">
+
+        <Button
+            android:id="@+id/name_1"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:text="zom"
+            android:textColor="#ff0000"
+            android:background="#000000"
+            android:layout_weight="1"
+            android:layout_margin="10dp" />
+
+        <Button
+            android:id="@+id/kill_2"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:text="8"
+            android:textColor="#ff0000"
+            android:background="#000000"
+            android:layout_weight="1"
+            android:layout_margin="10dp" />
+        <Button
+            android:id="@+id/death_3"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:text="0"
+            android:background="#000000"
+            android:textColor="#ff0000"
+            android:layout_weight="1"
+            android:layout_margin="10dp" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_weight="1">
+
+        <Button
+            android:id="@+id/name_2"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:text="bie"
+            android:textColor="#ff0000"
+            android:background="#000000"
+            android:layout_weight="1"
+            android:layout_margin="10dp" />
+
+        <Button
+            android:id="@+id/kill_3"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:text="0"
+            android:background="#000000"
+            android:textColor="#ff0000"
+            android:layout_weight="1"
+            android:layout_margin="10dp" />
+        <Button
+            android:id="@+id/death_3"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:text="0"
+            android:background="#000000"
+            android:textColor="#ff0000"
+            android:layout_weight="1"
+            android:layout_margin="10dp" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_weight="1">
+
+        <Button
+            android:id="@+id/OK"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:text="OK"
+            android:background="#000000"
+            android:textColor="#ff0000"
+            android:layout_weight="1"
+            android:layout_margin="10dp" />
+
+    </LinearLayout>
+</LinearLayout>

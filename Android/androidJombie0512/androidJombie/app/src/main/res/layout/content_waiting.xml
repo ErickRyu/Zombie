@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:background="#000000">
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_weight="0.1"
+        android:layout_margin="10dp"
+        android:layout_gravity="center_horizontal"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="곧 게임이 시작됩니다!"
+            android:textSize="30dp"
+            android:id="@+id/textView"
+            android:layout_centerHorizontal="true"
+            android:textColor="#ff0000"
+            android:gravity="center"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_weight="0.2"
+        android:layout_margin="20dp"
+        android:background="#000000">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="57dp"
+            android:textSize="30dp"
+            android:id="@+id/textViewtimebar"
+            android:layout_centerHorizontal="true"
+            android:textColor="#ff0000"
+            android:gravity="center"/>
+    </LinearLayout>
+
+
+    <ScrollView
+        android:id="@+id/scrollscnario"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:fillViewport="true"
+        android:layout_weight="0.88"
+        android:background="@drawable/btn_strokee"
+
+
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:textSize="15dp"
+            android:id="@+id/scenario"
+            android:lineSpacingExtra="15dip"
+            android:layout_centerHorizontal="true"
+            android:textColor="#ffffff"
+            android:gravity="center"
+            android:autoText="true"
+            android:singleLine="false"
+            />
+
+    </ScrollView>
+
+</LinearLayout>

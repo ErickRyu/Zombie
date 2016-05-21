@@ -1,0 +1,42 @@
+<component name="libraryTable">
+  <library name="debug">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/androidJombie/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-base-8.4.0_ffbabdd3846786ef7494ebc1288796814b82beb8.jar!/" />
+      <root url="jar://$PROJECT_DIR$/androidJombie/app/build/intermediates/pre-dexed/debug/com.android.support-mediarouter-v7-23.0.0_286056e3cd24e7c74e3c45fef83e03336aad8f93.jar!/" />
+      <root url="jar://$PROJECT_DIR$/androidJombie/app/build/intermediates/pre-dexed/debug/com.android.support-support-vector-drawable-24.0.0-alpha1_40e6d83e70a232c6b87d7ed4ea99af01625cea24.jar!/" />
+      <root url="jar://$PROJECT_DIR$/androidJombie/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-auth-8.4.0_0fd3412e47c27d70d412e8774db5f49efd3e7af2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/androidJombie/app/build/intermediates/pre-dexed/debug/internal_impl-23.0.0_907329004ab2ffc0113aa5e17806493691923507.jar!/" />
+      <root url="jar://$PROJECT_DIR$/androidJombie/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-ads-8.4.0_47fd33c7a4f03cd39c0a20d647937edd1c8581b8.jar!/" />
+      <root url="jar://$PROJECT_DIR$/androidJombie/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-appinvite-8.4.0_a2b53d9c234b26e3e5109fd71004e857bb772c8c.jar!/" />
+      <root url="jar://$PROJECT_DIR$/androidJombie/app/build/intermediates/pre-dexed/debug/com.android.support-appcompat-v7-24.0.0-alpha1_90becdf1b7048ee4cfcfb49b0baf02c52d759a15.jar!/" />
+      <root url="jar://$PROJECT_DIR$/androidJombie/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-vision-8.4.0_63bc3d8485a3e7a17e1334250936a13b5ded4a18.jar!/" />
+      <root url="jar://$PROJECT_DIR$/androidJombie/app/build/intermediates/pre-dexed/debug/com.android.support-support-v4-24.0.0-alpha1_27236c1f03554a32869930ce7e0e059db73c1a1d.jar!/" />
+      <root url="jar://$PROJECT_DIR$/androidJombie/app/build/intermediates/pre-dexed/debug/support-annotations-24.0.0-alpha1_f9f6b973b13b14700accc68225ede88a3fcfdcd1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/androidJombie/app/build/intermediates/pre-dexed/debug/internal_impl-24.0.0-alpha1_f282466bd9659cb925e71e1a6c68a640aba5adcf.jar!/" />
+      <root url="jar://$PROJECT_DIR$/androidJombie/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-maps-8.4.0_e6e43a3050cb94a733c1b25345b5ab5dd5339ddd.jar!/" />
+      <root url="jar://$PROJECT_DIR$/androidJombie/app/build/intermediates/pre-dexed/debug/com.android.support-recyclerview-v7-24.0.0-alpha1_d57634fc4ef53498034118025ab1ff480ce0a065.jar!/" />
+      <root url="jar://$PROJECT_DIR$/androidJombie/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-measurement-8.4.0_0d0183d826cb37520ecd970f28cbfb7b7e53c241.jar!/" />
+      <root url="jar://$PROJECT_DIR$/androidJombie/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-wearable-8.4.0_6bfe2648856a91eb9734d333ec191f9ff496d9d0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/androidJombie/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-analytics-8.4.0_102d1b7f47aeea3fdd21290470bf54af7f9a365a.jar!/" />
+      <root url="jar://$PROJECT_DIR$/androidJombie/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-drive-8.4.0_5488a77a115cb3d0881f96873bba13f662a9f51a.jar!/" />
+      <root url="jar://$PROJECT_DIR$/androidJombie/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-identity-8.4.0_e3aebe40caa329020583c25795f695bcdac73c89.jar!/" />
+      <root url="jar://$PROJECT_DIR$/androidJombie/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-wallet-8.4.0_768ea87c462b59cd7408d9aab9b0454479111eff.jar!/" />
+      <root url="jar://$PROJECT_DIR$/androidJombie/app/build/intermediates/pre-dexed/debug/debug_cc754e640e822c305f4586c362ddc21745386155.jar!/" />
+      <root url="jar://$PROJECT_DIR$/androidJombie/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-gcm-8.4.0_9e9e531b236ce27092493e4bb19dbc9e4bb304ac.jar!/" />
+      <root url="jar://$PROJECT_DIR$/androidJombie/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-safetynet-8.4.0_977736f994d139072f18c405d2f30035bdcdb00f.jar!/" />
+      <root url="jar://$PROJECT_DIR$/androidJombie/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-panorama-8.4.0_64a7507b989224e55c5396352520db2883990647.jar!/" />
+      <root url="jar://$PROJECT_DIR$/androidJombie/app/build/intermediates/pre-dexed/debug/com.android.support-animated-vector-drawable-24.0.0-alpha1_011c9ee202f83f8c754537173b2392500967f90c.jar!/" />
+      <root url="jar://$PROJECT_DIR$/androidJombie/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-location-8.4.0_edd7ce252386e2e63bd63dd9dfc17ff751c8903c.jar!/" />
+      <root url="jar://$PROJECT_DIR$/androidJombie/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-games-8.4.0_99a8d05a026b64acc6dfc38159a3a4928772f354.jar!/" />
+      <root url="jar://$PROJECT_DIR$/androidJombie/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-basement-8.4.0_c8bb2117b655da063db6b2c10e1ac4fab5b20d4f.jar!/" />
+      <root url="jar://$PROJECT_DIR$/androidJombie/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-plus-8.4.0_b29621a278b38236deac0b75bbcbda147dfffd63.jar!/" />
+      <root url="jar://$PROJECT_DIR$/androidJombie/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-cast-8.4.0_25533b870eb75056fe82420b1dd9dc6f7aba7554.jar!/" />
+      <root url="jar://$PROJECT_DIR$/androidJombie/app/build/intermediates/pre-dexed/debug/com.android.support-design-24.0.0-alpha1_817fbd2cf461d65b07fc633f5dd659f848a5f81c.jar!/" />
+      <root url="jar://$PROJECT_DIR$/androidJombie/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-nearby-8.4.0_d54f2e607c6405881afdc276a8b60953e8cfa4bb.jar!/" />
+      <root url="jar://$PROJECT_DIR$/androidJombie/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-fitness-8.4.0_72a6557f6f4a3c5fbe7fdbac1fb91e16e596e1a4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/androidJombie/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-appindexing-8.4.0_deadb63a102f7de25e9f65dc57a07e26af90d3ab.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

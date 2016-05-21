@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">socket</string>
+    <string name="action_settings">Settings</string>
+    <string name="sad">ip address</string>
+    <string name="asddd">소켓연결하기</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="title_activity_main22">Main22Activity</string>
+    <string name="title_activity_main23">Main23Activity</string>
+    <string name="title_activity_main24">Main24Activity</string>
+    <string name="title_activity_register">register</string>
+    <string name="title_activity_endgame">Endgame</string>
+</resources>
