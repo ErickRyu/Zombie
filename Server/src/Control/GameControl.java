@@ -9,7 +9,7 @@ import Model.User;
 public class GameControl {
 	static final double _VisibleDistance = 0.0006;
 	static final double _AttackableDistance = 0.00015;
-	static final int _AttackPower = 1;
+	static final int _AttackPower = 20;
 	
 	
 	/**
@@ -41,6 +41,7 @@ public class GameControl {
 					if(user2.getHP() <= 0) {
 						user1.addKill();
 						user2.setDead();
+						UserControl.humanNum--;
 					}
 					
 				}

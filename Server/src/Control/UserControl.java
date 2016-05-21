@@ -10,9 +10,9 @@ public class UserControl {
 	static final float zombiePossiblity = 0.3f;
 	static final int _MaxPlyaer = 7;
 	static final int _MaxZombie = 3;
-	
-	static int zombieNum = 0;
-	
+	static boolean isFirst = true;
+	public static int zombieNum = 0;
+	public static int humanNum = 0;
 	ConcurrentHashMap<Integer, User> userMap;
 	UserDatabase userDB;
 	GameControl gameControl;
@@ -23,10 +23,21 @@ public class UserControl {
 	}
 
 	public User initUser(int userId, double latitude, double longitude) {
-		// ToDo change to getting from client initial Location
-		boolean isZombie = Math.random() > zombiePossiblity ? (zombieNum < _MaxZombie ? true : false) : false;
+		/* init for test */
+		boolean isZombie;
+		if(isFirst){
+//		 isZombie = Math.random() > zombiePossiblity ? (zombieNum < _MaxZombie ? true : false) : false;
+			isZombie = true;
+		 isFirst = false;
+		}else{
+			isZombie = false;
+		}
+		
 		if (isZombie)
 			zombieNum++;
+		else
+			humanNum++;
+		
 		String name = userDB.getUserName(userId);
 		User user = new User(userId, name, latitude, longitude, isZombie);
 		return user;
@@ -56,5 +67,17 @@ public class UserControl {
 	
 	public void attack(){
 		gameControl.attack(userMap);
+	}
+	public void printUserStat(){
+		for(User user : userMap.values()){
+			System.out.println(user.getUserName());
+			System.out.println(user.getHP());
+			System.out.println(user.getisZombie()? "Zombie" : "Human");
+			System.out.println(user.isDead()? "Alive" : "Dead");
+			
+		}
+	}
+	public void decreaseHumanNum(){
+		humanNum--;
 	}
 }

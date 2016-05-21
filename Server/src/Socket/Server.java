@@ -48,7 +48,10 @@ public class Server {
 	private void clientListener() throws IOException {
 
 		Socket socket = null;
-		new waitForGo().start();
+
+		Runnable cmdRun = new commandThread();
+		new Thread(cmdRun).start();
+
 		while (!isGameStart) {
 			socket = serverSocekt.accept();
 			// Connect to client
@@ -56,39 +59,50 @@ public class Server {
 				ConnectionToClient client = new ConnectionToClient(socket);
 				// Init New User
 				initUser(client);
-				clients.add(client);
-				System.out.println("[Info] client connected");
 			}
 		}
 		while (!isGameOver) {
 			;
 		}
-		
+
 		serverSocekt.close();
 	}
 
-	private class waitForGo extends Thread {
+	private class commandThread implements Runnable {
 		public void run() {
-			String commandToGo = "";
+			String command = "";
 			Scanner sc = new Scanner(System.in);
-			while (!commandToGo.equals("GO")) {
-				commandToGo = sc.next();
+			while (!command.equals("GO")) {
+				command = sc.next();
 			}
 			try {
 				for (ConnectionToClient client : clients) {
-					client.write("GO");
+					client.write(command);
 				}
-			} catch (IOException e) {
-				System.out.println("IOException\n" + e.getMessage());
-			}
-			isGameStart = true;
-			isGameOver = false;
 
-			// Thread start
-			Runnable r = new MessageHandler();
-			Thread thread = new Thread(r);
-			thread.start();
-			sc.close();
+				isGameStart = true;
+				isGameOver = false;
+
+				// Thread start
+				Runnable r = new MessageHandler();
+				Thread msgThread = new Thread(r);
+				msgThread.start();
+				while ((command = sc.next()).equals("EXIT")) {
+					System.out.println("[Info] Exit occur");
+					for (ConnectionToClient client : clients) {
+						client.write(command);
+					}
+					msgThread.stop();
+				}
+			} catch (EOFException e) {
+				System.out.println("EOFException : " + e);
+				e.printStackTrace();
+			} catch (IOException e) {
+				System.out.println("IOException : " + e);
+				e.printStackTrace();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -96,20 +110,27 @@ public class Server {
 		try {
 			boolean matched = false;
 			int userId = 0;
-			while (!matched) {
-				userId = (int) client.read();
-				System.out.println(userId);
-				matched = userControl.isThereMatchedUser(userId);
-				client.write(matched);
+			System.out.println("client list size is : " + clients.size());
+			userId = (int) client.read();
+			System.out.println(userId);
+			matched = userControl.isThereMatchedUser(userId);
+			client.write(matched);
+			
+			if (matched) {
+				System.out.println("[Info] client connected");
+				clients.add(client);
+				double latitude = 0;
+				double longitude = 0;
+				System.out.println("login user id : (" + userId + ")");
+				userControl.putUser(userControl.initUser(userId, latitude, longitude));
 			}
-//			double latitude = (double) client.read();
-//			double longitude = (double) client.read();
-			double latitude = 0;
-			double longitude = 0;
-			System.out.println("login user id : ("+userId+")");
-			userControl.putUser(userControl.initUser(userId, latitude, longitude));
+		} catch (EOFException e) {
+			System.out.println("EOFException : " + e);
+			e.printStackTrace();
+
 		} catch (IOException e) {
-			System.out.println("IOExcpetion \n" + e.getMessage());
+			System.out.println("IOExcpetion \n" + e);
+			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -124,28 +145,42 @@ public class Server {
 
 		public void run() {
 			try {
+				boolean firstSend = true;
+
 				String input = "";
 				System.out.println("[Info] MessageHandler started");
 				while (!isGameOver) {
-					Thread.sleep(WAIT_TIME);
+					if (firstSend)
+						Thread.sleep(5000);
+					else
+						Thread.sleep(WAIT_TIME);
+
 					for (ConnectionToClient client : clients) {
-						System.out.println("[Info] Giving command to all clients");
-						client.write("giveLocation");
-						input = (String) client.read();
-						System.out.println("Read : " + input);
-						String[] idAndLocation = input.split(":");
-						int userId = Integer.parseInt(idAndLocation[0]);
-						String[] Location = idAndLocation[1].split(" ");
-						double latitude = Double.parseDouble(Location[0]);
-						double longitude = Double.parseDouble(Location[1]);
-						
-						userControl.setLatitude(userId, latitude);
-						userControl.setLongitude(userId, longitude);
+						if (userControl.humanNum == 0) {
+							client.write("EXIT");
+							isGameOver = true;
+						} else {
+							System.out.println("[Info] Giving command to all clients");
+							client.write("giveLocation");
+							System.out.println("[Info] Sended giveLocation command");
+							input = (String) client.read();
+							System.out.println("Read : " + input);
+							String[] idAndLocation = input.split(":");
+							int userId = Integer.parseInt(idAndLocation[0]);
+							String[] Location = idAndLocation[1].split(" ");
+							double latitude = Double.parseDouble(Location[0]);
+							double longitude = Double.parseDouble(Location[1]);
+
+							userControl.setLatitude(userId, latitude);
+							userControl.setLongitude(userId, longitude);
+						}
 					}
+
 					// Game play
 					userControl.attack();
 
 					tellEveryOne(userControl.getUserMap());
+					userControl.printUserStat();
 				}
 
 			} catch (EOFException e) {
