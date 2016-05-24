@@ -53,11 +53,14 @@ public class Server {
 		new Thread(cmdRun).start();
 
 		while (!isGameStart) {
+			System.out.println("Client Listening...");
 			socket = serverSocekt.accept();
 			// Connect to client
 			if (!isGameStart) {
+				System.out.println("Acceptd client...");
 				ConnectionToClient client = new ConnectionToClient(socket);
 				// Init New User
+				System.out.println("Initiating client...");
 				initUser(client);
 			}
 		}
@@ -70,12 +73,13 @@ public class Server {
 
 	private class commandThread implements Runnable {
 		public void run() {
-			String command = "";
-			Scanner sc = new Scanner(System.in);
-			while (!command.equals("GO")) {
-				command = sc.next();
-			}
 			try {
+				String command = "";
+				Scanner sc = new Scanner(System.in);
+				while (!command.equals("GO")) {
+					command = sc.next();
+				}
+
 				for (ConnectionToClient client : clients) {
 					client.write(command);
 				}
@@ -87,12 +91,12 @@ public class Server {
 				Runnable r = new MessageHandler();
 				Thread msgThread = new Thread(r);
 				msgThread.start();
-				while ((command = sc.next()).equals("EXIT")) {
-					System.out.println("[Info] Exit occur");
-					for (ConnectionToClient client : clients) {
-						client.write(command);
-					}
-					msgThread.stop();
+				while (!command.equals("EXIT")) {
+					command = sc.next();
+				}
+				System.out.println("[Info] Exit occur");
+				for (ConnectionToClient client : clients) {
+					client.write(command);
 				}
 			} catch (EOFException e) {
 				System.out.println("EOFException : " + e);
@@ -110,12 +114,11 @@ public class Server {
 		try {
 			boolean matched = false;
 			int userId = 0;
-			System.out.println("client list size is : " + clients.size());
 			userId = (int) client.read();
 			System.out.println(userId);
 			matched = userControl.isThereMatchedUser(userId);
 			client.write(matched);
-			
+
 			if (matched) {
 				System.out.println("[Info] client connected");
 				clients.add(client);
@@ -124,6 +127,7 @@ public class Server {
 				System.out.println("login user id : (" + userId + ")");
 				userControl.putUser(userControl.initUser(userId, latitude, longitude));
 			}
+			System.out.println("client list size is : " + clients.size());
 		} catch (EOFException e) {
 			System.out.println("EOFException : " + e);
 			e.printStackTrace();
@@ -137,10 +141,7 @@ public class Server {
 	}
 
 	private class MessageHandler implements Runnable {
-		// ConnectionToClient client;
-
 		MessageHandler() {
-			// this.client = client;
 		}
 
 		public void run() {
@@ -156,10 +157,10 @@ public class Server {
 						Thread.sleep(WAIT_TIME);
 
 					for (ConnectionToClient client : clients) {
-						if (userControl.humanNum == 0) {
-							client.write("EXIT");
-							isGameOver = true;
-						} else {
+//						if (userControl.mHumanNum == 0) {
+//							client.write("EXIT");
+//							isGameOver = true;
+//						} else {
 							System.out.println("[Info] Giving command to all clients");
 							client.write("giveLocation");
 							System.out.println("[Info] Sended giveLocation command");
@@ -173,7 +174,7 @@ public class Server {
 
 							userControl.setLatitude(userId, latitude);
 							userControl.setLongitude(userId, longitude);
-						}
+//						}
 					}
 
 					// Game play

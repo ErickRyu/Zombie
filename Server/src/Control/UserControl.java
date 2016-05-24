@@ -7,77 +7,79 @@ import Model.UserDatabase;
 
 public class UserControl {
 	
-	static final float zombiePossiblity = 0.3f;
-	static final int _MaxPlyaer = 7;
-	static final int _MaxZombie = 3;
-	static boolean isFirst = true;
-	public static int zombieNum = 0;
-	public static int humanNum = 0;
-	ConcurrentHashMap<Integer, User> userMap;
-	UserDatabase userDB;
-	GameControl gameControl;
+	private static final float _ZombiePossiblity = 0.3f;
+	private static final int _MaxPlyaer = 7;
+	private static final int _MaxZombie = 3;
+	private static boolean mIsFirst = true;
+	private static boolean mIsSecond = true;
+	public static int mZombieNum = 0;
+	public static int mHumanNum = 0;
+	ConcurrentHashMap<Integer, User> mUserMap;
+	UserDatabase mUserDB;
+	GameControl mGameControl;
 	public UserControl() {
-		userMap = new ConcurrentHashMap<Integer, User>();
-		userDB = new UserDatabase();
-		gameControl = new GameControl();
+		mUserMap = new ConcurrentHashMap<Integer, User>();
+		mUserDB = new UserDatabase();
+		mGameControl = new GameControl();
 	}
 
 	public User initUser(int userId, double latitude, double longitude) {
-		/* init for test */
 		boolean isZombie;
-		if(isFirst){
-//		 isZombie = Math.random() > zombiePossiblity ? (zombieNum < _MaxZombie ? true : false) : false;
+		/* Make first user zombie and second user human and others random */
+		if(mIsFirst){
 			isZombie = true;
-		 isFirst = false;
-		}else{
+			mIsFirst = false;
+		}else if(mIsSecond){
 			isZombie = false;
+			mIsSecond = false;
+		}else{
+			isZombie = Math.random() > _ZombiePossiblity ? (mZombieNum < _MaxZombie ? true : false) : false;
 		}
 		
 		if (isZombie)
-			zombieNum++;
+			mZombieNum++;
 		else
-			humanNum++;
+			mHumanNum++;
 		
-		String name = userDB.getUserName(userId);
+		String name = mUserDB.getUserName(userId);
 		User user = new User(userId, name, latitude, longitude, isZombie);
 		return user;
 	}
 	public void putUser(User user){
-		userMap.put(user.getUserId(), user);
+		mUserMap.put(user.getUserId(), user);
 	}
 
 	public void setLatitude(int userId, double latitude){
-		if(userMap.get(userId) == null){
+		if(mUserMap.get(userId) == null){
 			System.out.println("userMap is null");
 		}
-		userMap.get(userId).setLatitude(latitude);
+		mUserMap.get(userId).setLatitude(latitude);
 	}
 	public void setLongitude(int userId, double longitude){
-		userMap.get(userId).setLongitude(longitude);
+		mUserMap.get(userId).setLongitude(longitude);
 	}
 
 	public ConcurrentHashMap<Integer, User> getUserMap() {
-		return userMap;
+		return mUserMap;
 	}
 
 	public boolean isThereMatchedUser(int userId){
-		String name = userDB.getUserName(userId);
+		String name = mUserDB.getUserName(userId);
 		return name!=null? true:false;
 	}
 	
 	public void attack(){
-		gameControl.attack(userMap);
+		mGameControl.attack(mUserMap);
 	}
 	public void printUserStat(){
-		for(User user : userMap.values()){
+		for(User user : mUserMap.values()){
 			System.out.println(user.getUserName());
 			System.out.println(user.getHP());
 			System.out.println(user.getisZombie()? "Zombie" : "Human");
-			System.out.println(user.isDead()? "Alive" : "Dead");
-			
+			System.out.println(user.isDead()? "Alive" : "Dead");;
 		}
 	}
 	public void decreaseHumanNum(){
-		humanNum--;
+		mHumanNum--;
 	}
 }

@@ -41,7 +41,8 @@ public class GameControl {
 					if(user2.getHP() <= 0) {
 						user1.addKill();
 						user2.setDead();
-						UserControl.humanNum--;
+						user2.addDeath();
+						UserControl.mHumanNum--;
 					}
 					
 				}
