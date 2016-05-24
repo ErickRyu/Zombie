@@ -31,6 +31,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.socketclient.ConnectionToServer;
 
+import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;
 
 import Model.User;
@@ -38,6 +39,7 @@ import Model.User;
 public class map extends AppCompatActivity {
     static final int ENEMY_COLOR = Color.RED;
     static final int FRIEND_COLOR = Color.GREEN;
+
 
     Button status;
     TextView textview;
@@ -157,6 +159,8 @@ public class map extends AppCompatActivity {
                     input = (String) server.read();
                     Log.d("MainActivity", "[Info] got message : " + input);
                     if (input.equals("giveLocation")) {
+                        if(userMap != null)
+                            userMap.clear();
 
                         lastLocation = manager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
                         Log.d("MainActivity", "[Info] lastLocation : " + lastLocation);
@@ -169,6 +173,7 @@ public class map extends AppCompatActivity {
                         System.out.println("*********************************");
                         userMap = (ConcurrentHashMap<Integer, User>) server.read();
                         me = userMap.get(userId);
+
 
                         for (final User user : userMap.values()) {
 
@@ -197,15 +202,18 @@ public class map extends AppCompatActivity {
                             });
 
 
-                            Log.d("MainActivity", "----------\n" +
+                            Log.d("MainActivity", "[Info] userMap contents : ----------\n" +
                                     name + "\n"
                                     + "(" + latitude + ", " + longitude + ")\n"
                                     + "HP : " + hp + "\n"
                                     + (isZombie ? "Zombie" : "Human"));
                         }
-                        userMap.clear();
                     } else if (input.equals("EXIT")) {
+                        HashMap<Integer, User> passUserMap = new HashMap<Integer, User>(userMap);
+                        ConnectionToServer.userMap = passUserMap;
                         Intent exit = new Intent(map.this, Endgame.class);
+
+
                         startActivity(exit);
                         break;
                     }

@@ -7,49 +7,55 @@ import java.util.List;
 public class User implements Serializable{
     private static final long serialVersionUID = -505870546358096892L;
 
-    private int userId;
-    private String userName;
-    private int hp;
-    private boolean isZombie;
-    private boolean isDead;
-    private double latitude;
-    private double longitude;
-    private int kill;
+    private int mUserId;
+    private String mUserName;
+    private int mHp;
+    private boolean mIsZombie;
+    private boolean mIsDead;
+    private double mLatitude;
+    private double mLongitude;
+    private int mKill;
+    private int mDeath;
 
-    private List<User> nearEnemies;
+    private List<User> mNearEnemiesList;
     // ToDo
     public User(){}
     public User(int userId, String userName, double latitude, double longitude, boolean isZombie){
-        this.userId = userId;
-        this.userName = userName;
-        this.hp = 100;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.isZombie = isZombie;
-        this.isDead = false;
-        kill = 0;
-        nearEnemies = new ArrayList<>();
+        this.mUserId = userId;
+        this.mUserName = userName;
+        this.mHp = 100;
+        this.mLatitude = latitude;
+        this.mLongitude = longitude;
+        this.mIsZombie = isZombie;
+        this.mIsDead = false;
+        mKill = 0;
+        mDeath = 0;
+        mNearEnemiesList = new ArrayList<>();
     }
-    public int getUserId(){return userId;}
+    public int getUserId(){return mUserId;}
 
-    public String getUserName(){return userName;}
+    public String getUserName(){return mUserName;}
 
-    public int getHP(){return hp;}
-    public void setHP(int hp){this.hp = hp;}
+    public int getHP(){return mHp;}
+    public void setHP(int hp){this.mHp = hp;}
 
-    public boolean getisZombie(){return isZombie;}
+    public boolean getisZombie(){return mIsZombie;}
 
-    public double getLatitude(){return latitude;}
-    public double getLongitude(){return longitude;}
-    public void setLatitude(double latitude){this.latitude = latitude;}
-    public void setLongitude(double longitude){this.longitude = longitude;}
+    public double getLatitude(){return mLatitude;}
+    public double getLongitude(){return mLongitude;}
+    public void setLatitude(double latitude){this.mLatitude = latitude;}
+    public void setLongitude(double longitude){this.mLongitude = longitude;}
 
-    public boolean isDead(){return isDead;}
-    public void setDead(){isDead = true;}
+    public boolean isDead(){return mIsDead;}
+    public void setDead(){mIsDead = true;}
 
-    public List<User> getNearEnemies(){return nearEnemies;}
-    public void setNearEnemies(List<User> nearEnemies){this.nearEnemies = nearEnemies;}
+    public List<User> getNearEnemies(){return mNearEnemiesList;}
+    public void setNearEnemies(List<User> nearEnemies){this.mNearEnemiesList = nearEnemies;}
 
-    public int getKill() {return kill;}
-    public void addKill() {kill++;}
+    public int getKill() {return mKill;}
+    public void addKill() {mKill++;}
+
+    public int getDeath() {return mDeath;}
+    public void addDeath() {mDeath++;}
+
 }

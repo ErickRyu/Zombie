@@ -57,10 +57,14 @@ public class waiting extends Activity {
         protected Long doInBackground(String... params) {
             try {
                 server = (ConnectionToServer) getApplicationContext();
+
                 String input = "";
 
                 Log.d("MainActivity", "[Info] Waiting start...");
-                while (!(input = (String) server.read()).equals("GO")) {
+                input = (String)server.read();
+                Log.d("MainActivity", "[Info] Read input is : " + input);
+                while (!input.equals("GO")) {
+                    input = (String)server.read();
                 }
                 Log.d("MainActivity", "[Info] Starting Google map...");
                 //start Map
@@ -69,7 +73,7 @@ public class waiting extends Activity {
                 startActivity(startmap);
 
             } catch (Exception e) {
-                Log.d("MainActivity", "[Error] waiting class \n" + e.getMessage());
+                Log.d("MainActivity", "[Error] waiting class \n" + e);
                 for (StackTraceElement err : e.getStackTrace()) {
                     Log.d("MainActivity", "[Error]" + err + "\n");
                 }

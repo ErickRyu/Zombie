@@ -5,6 +5,9 @@ import android.app.Application;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.HashMap;
+
+import Model.User;
 
 /**
  * Created by erick on 2016-05-16.
@@ -14,6 +17,8 @@ public class ConnectionToServer extends Application{
     public static ObjectInputStream ois;
     public static ObjectOutputStream oos;
     public static int userId;
+    public static HashMap<Integer, User> userMap;
+
     @Override
     public void onCreate(){
         super.onCreate();

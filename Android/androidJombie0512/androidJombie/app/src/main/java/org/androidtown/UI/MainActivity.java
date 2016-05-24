@@ -29,6 +29,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     Socket socket;
     ConnectionToServer server;
     static int userId;
+    public static final String ip = "172.120.98.51";
 
     ////
     private Button b1;
@@ -136,7 +137,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
             try {
             /*Toast toview = new Toast(getApplicationContext());*/
 //                Log.d("MainActivity", "[Info] Connecting server");
-                socket = new Socket("192.168.0.7", 5000);
+                socket = new Socket(ip, 5000);
 //                Log.d("MainActivity", "[Info] Connecting...");
                 server = new ConnectionToServer(socket);
                 Log.d("MainActivity", "[Info] Connected");
